@@ -401,8 +401,8 @@
       align-items: center;
       gap: var(--space-sm);
       background: transparent;
-      /* Always mist-coloured text — hero is always dark regardless of theme */
-      color: var(--color-mist);
+      /* Theme-aware — adapts to both light and dark mode */
+      color: var(--text-primary);
       font-family: var(--font-body);
       font-size: var(--text-xs);
       font-weight: 600;
@@ -410,7 +410,7 @@
       text-transform: uppercase;
       padding: 11px 24px;
       border-radius: var(--radius-pill);
-      border: 0.5px solid rgba(240, 234, 250, 0.45);
+      border: 0.5px solid var(--text-secondary);
       transition: border-color var(--transition-fast),
                   background var(--transition-fast),
                   color var(--transition-fast);
@@ -418,6 +418,16 @@
     .btn-ghost:hover {
       border-color: var(--color-gold);
       background: rgba(200, 146, 42, 0.12);
+      color: var(--color-gold);
+    }
+
+    /* Hero ghost button — hero is always dark so lock to mist regardless of theme */
+    #hero .btn-ghost {
+      color: var(--color-mist);
+      border-color: rgba(240, 234, 250, 0.45);
+    }
+    #hero .btn-ghost:hover {
+      border-color: var(--color-gold);
       color: var(--color-gold);
     }
 
@@ -3988,21 +3998,22 @@
              ╚══════════════════════════════════════════════════════════╝ -->
         <div class="about-bio reveal">
           <p>
-            Kenneth Kamau picked up his first guitar at 16, drawn not by ambition
+            I picked up my first guitar at 16, drawn not by ambition
             but by a quiet pull toward something deeper. What started as a few chords
             learnt in a small Nairobi church quickly became a calling &mdash; a way of
             translating what words alone couldn't carry.
           </p>
           <p>
-            At 22, Kenneth plays lead guitar in a gospel band, supporting worship
-            across churches, conferences, and gospel events throughout Kenya. His
-            playing is less about performance and more about presence &mdash; he believes
+            At 22, I play lead guitar in a gospel band, supporting worship
+            across churches, conferences, and gospel events throughout Kenya. For me,
+            playing is less about performance and more about presence &mdash; I believe
             a single sustained note, played at the right moment, can shift an entire
             room into worship.
           </p>
           <p>
-            From intimate Sunday services to large-stage gospel conferences, Kenneth
-            has supported moments of worship that linger long after the music stops.
+            From intimate Sunday services to large-stage gospel conferences, I've had
+            the privilege of supporting moments of worship that linger long after
+            the music stops.
           </p>
         </div>
 
@@ -4210,9 +4221,9 @@
             </div>
             <h3 class="journey-title">First guitar</h3>
             <p class="journey-desc">
-              At 16, Kenneth received his first acoustic guitar — a secondhand
-              instrument that would change everything. Within weeks he was
-              learning worship songs by ear in his family church.
+              At 16, I received my first acoustic guitar &mdash; a secondhand
+              instrument that would change everything. Within weeks I was
+              learning worship songs by ear in my family church.
             </p>
           </div>
           <!-- Dot on the timeline line -->
@@ -4234,10 +4245,9 @@
             </div>
             <h3 class="journey-title">First church performance</h3>
             <p class="journey-desc">
-              Kenneth played his first full Sunday service as part of the
-              worship team. Nervous hands, a room of faithful people, and
-              a moment he describes as "the first time I understood what
-              the guitar was for."
+              I played my first full Sunday service as part of the worship
+              team. Nervous hands, a room of faithful people, and the moment
+              I finally understood what the guitar was for.
             </p>
           </div>
           <div class="journey-dot" aria-hidden="true">
@@ -4259,10 +4269,10 @@
             </div>
             <h3 class="journey-title">Switching to electric</h3>
             <p class="journey-desc">
-              The shift from acoustic to electric guitar opened a new
-              sonic world. Kenneth began exploring effects pedals, lead
-              playing, and the expressive range that would define his
-              worship style.
+              Switching from acoustic to electric opened a whole new
+              sonic world. I began exploring effects pedals, lead
+              playing, and the expressive range that would come to
+              define my worship style.
             </p>
           </div>
           <div class="journey-dot" aria-hidden="true">
@@ -4285,10 +4295,10 @@
             </div>
             <h3 class="journey-title">Joining the band</h3>
             <p class="journey-desc">
-              Kenneth joined his first full gospel band as lead guitarist —
-              a turning point that pushed him to grow fast. Playing
-              alongside seasoned musicians sharpened both his technique
-              and his ear for worship dynamics.
+              I joined my first full gospel band as lead guitarist &mdash;
+              a turning point that pushed me to grow fast. Playing
+              alongside seasoned musicians sharpened both my technique
+              and my ear for worship dynamics.
             </p>
           </div>
           <div class="journey-dot" aria-hidden="true">
@@ -4311,10 +4321,10 @@
             </div>
             <h3 class="journey-title">First major conference</h3>
             <p class="journey-desc">
-              Playing at a large-scale gospel conference for the first time
-              — thousands in attendance, a full stage setup, and lights
-              bright enough to feel like a different world. Kenneth held
-              his own and hasn't looked back since.
+              Playing a large-scale gospel conference for the first time
+              &mdash; thousands in attendance, a full stage setup, and lights
+              bright enough to feel like a different world. I held
+              my own, and I haven't looked back since.
             </p>
           </div>
           <div class="journey-dot" aria-hidden="true">
@@ -4334,9 +4344,9 @@
             </div>
             <h3 class="journey-title">Writing the next chapter</h3>
             <p class="journey-desc">
-              At 22, Kenneth continues to grow as a worship guitarist,
+              At 22, I'm still growing &mdash; as a worship guitarist,
               session musician, and live performer. The journey is far
-              from over — every service, every stage, every string is
+              from over. Every service, every stage, every string is
               another verse in an unfinished song.
             </p>
           </div>
@@ -5046,8 +5056,8 @@
             <h3 class="gear-card-name">Fender Stratocaster</h3>
             <p class="gear-card-brand">Fender · Player Series</p>
             <p class="gear-card-desc">
-              Kenneth&rsquo;s go-to for live worship. The single-coil pickups
-              deliver the clean, bell-like tones that sit perfectly in a
+              My go-to for live worship. The single-coil pickups
+              deliver clean, bell-like tones that sit perfectly in a
               band mix without muddying the low end.
             </p>
           </div>
@@ -5065,9 +5075,9 @@
             <h3 class="gear-card-name">Yamaha FG800</h3>
             <p class="gear-card-brand">Yamaha · FG Series</p>
             <p class="gear-card-desc">
-              The guitar that started it all. Still used for intimate
-              settings, songwriting sessions, and any moment where
-              the raw warmth of an acoustic is the right call.
+              The guitar that started it all for me. I still reach for
+              it in intimate settings, songwriting sessions, and any
+              moment where the raw warmth of an acoustic is the right call.
             </p>
           </div>
 
@@ -5095,7 +5105,7 @@
             <p class="gear-card-desc">
               A 15-watt all-tube combo that breaks up beautifully at
               moderate volumes. Warm, responsive, and perfectly sized
-              for church stages without overpowering the mix.
+              for church stages without ever overpowering the mix.
             </p>
           </div>
 
@@ -5112,8 +5122,8 @@
             <h3 class="gear-card-name">Boss Katana 50 MkII</h3>
             <p class="gear-card-brand">Boss · Katana Series</p>
             <p class="gear-card-desc">
-              Reliable, versatile solid-state backup with built-in
-              effects. Used for rehearsals and smaller venues where
+              My reliable solid-state backup with built-in effects.
+              I use it for rehearsals and smaller venues where
               bringing the tube amp isn&rsquo;t practical.
             </p>
           </div>
@@ -5141,9 +5151,9 @@
             <h3 class="gear-card-name">Strymon BigSky</h3>
             <p class="gear-card-brand">Strymon · Reverb Pedal</p>
             <p class="gear-card-desc">
-              The cornerstone of Kenneth&rsquo;s atmospheric sound. The hall
+              The cornerstone of my atmospheric sound. The hall
               and plate reverbs create the spacious, cathedral-like
-              wash that defines his worship tone.
+              wash that defines my worship tone.
             </p>
           </div>
 
@@ -5158,8 +5168,8 @@
             <h3 class="gear-card-name">Boss DD-8</h3>
             <p class="gear-card-brand">Boss · Digital Delay</p>
             <p class="gear-card-desc">
-              Tap-tempo delay that locks to the band&rsquo;s groove. Used
-              subtly for lead lines and more expressively during
+              Tap-tempo delay that locks to the band&rsquo;s groove. I use
+              it subtly for lead lines and more expressively during
               spontaneous worship moments.
             </p>
           </div>
@@ -5175,9 +5185,9 @@
             <h3 class="gear-card-name">Ibanez Tube Screamer</h3>
             <p class="gear-card-brand">Ibanez · TS9</p>
             <p class="gear-card-desc">
-              Light, musical overdrive that pushes the amp into
-              natural breakup. Adds warmth and sustain for lead
-              playing without losing clarity.
+              Light, musical overdrive that pushes my amp into
+              natural breakup. It adds warmth and sustain for lead
+              playing without losing any clarity.
             </p>
           </div>
 
@@ -5196,8 +5206,8 @@
             <p class="gear-card-brand">Ernie Ball · Volume Pedal</p>
             <p class="gear-card-desc">
               Smooth, silent volume swells between passages. Essential
-              for the dynamic builds and quiet moments that define
-              a great worship set.
+              for the dynamic builds and quiet moments that I believe
+              define a great worship set.
             </p>
           </div>
 
@@ -5220,9 +5230,9 @@
             <h3 class="gear-card-name">Elixir Nanoweb 10–46</h3>
             <p class="gear-card-brand">Elixir · Coated Strings</p>
             <p class="gear-card-desc">
-              The coated winding keeps the tone bright and consistent
-              across long sets. A fresh set before every major event,
-              and Elixirs last long enough between gigs.
+              The coated winding keeps my tone bright and consistent
+              across long sets. I put on a fresh set before every
+              major event &mdash; and Elixirs last long enough between gigs.
             </p>
           </div>
 
@@ -5238,7 +5248,7 @@
             <p class="gear-card-brand">Dunlop · Tortex Standard</p>
             <p class="gear-card-desc">
               Medium gauge for the balance between attack and flex.
-              Kenneth always keeps a handful taped to his mic stand
+              I always keep a handful taped to my mic stand
               for quick swaps mid-set.
             </p>
           </div>
@@ -5255,9 +5265,9 @@
             <h3 class="gear-card-name">TC Electronic PolyTune 3</h3>
             <p class="gear-card-brand">TC Electronic · Polyphonic Tuner</p>
             <p class="gear-card-desc">
-              Polyphonic tuning — strum all six strings at once and
-              see which ones are out. Fast, silent, and always first
-              in the signal chain.
+              Polyphonic tuning &mdash; I strum all six strings at once and
+              see which ones are out. Fast, silent, and always
+              first in my signal chain.
             </p>
           </div>
 
@@ -5274,7 +5284,7 @@
             <p class="gear-card-desc">
               Premium low-capacitance cables that preserve high-end
               detail and resist interference on stage. The last upgrade
-              that made an immediately audible difference.
+              I made that had an immediately audible difference.
             </p>
           </div>
 
