@@ -582,6 +582,11 @@
       text-transform: uppercase;
       color: var(--text-secondary);
       transition: color var(--transition-fast);
+      /* Generous padding expands the clickable area well beyond
+         the text itself — easier to hit without changing appearance */
+      padding: 10px 8px;
+      margin: -10px -8px; /* Negative margin cancels the visual spacing
+                             shift so links stay visually where they are */
     }
     .nav-links a:hover {
       color: var(--color-gold);
@@ -712,32 +717,56 @@
 
     /* ── Hero background layers ── */
 
-    /* ╔══════════════════════════════════════════════════════════╗
-       ║  CHANGE #1 — HERO BACKGROUND PHOTO                      ║
-       ║                                                          ║
-       ║  1. Place Kenneth's photo at:  images/hero-bg.jpg       ║
-       ║     Best: dark, stage-lit landscape, 1920×1080px min.   ║
-       ║     Good options: silhouette shot, spotlight, fretboard  ║
-       ║                                                          ║
-       ║  2. Uncomment the ONE line below that says:             ║
-       ║       background-image: url('images/hero-bg.jpg');      ║
-       ║                                                          ║
-       ║  The dark overlay above the image keeps text readable.  ║
-       ║  To make the overlay lighter/darker, find              ║
-       ║  .hero-bg-overlay and adjust the rgba opacity values.   ║
-       ╚══════════════════════════════════════════════════════════╝ */
+    /* ╔══════════════════════════════════════════════════════════════╗
+       ║  CHANGE #1 — HERO BACKGROUND PHOTOS                         ║
+       ║                                                              ║
+       ║  There are TWO images — one for desktop, one for mobile.    ║
+       ║                                                              ║
+       ║  DESKTOP IMAGE (landscape):                                  ║
+       ║    • File path:  images/hero-bg-desktop.jpg                 ║
+       ║    • Size:       1920×1080px minimum                        ║
+       ║    • Orientation: landscape (wide)                          ║
+       ║    • Best shot:  wide stage shot, subject left/centre-left  ║
+       ║                  warm amber spotlight, dark surroundings    ║
+       ║    → Uncomment the line in the .hero-bg block below        ║
+       ║                                                              ║
+       ║  MOBILE IMAGE (portrait):                                    ║
+       ║    • File path:  images/hero-bg-mobile.jpg                  ║
+       ║    • Size:       1080×1920px minimum                        ║
+       ║    • Orientation: portrait (tall)                           ║
+       ║    • Best shot:  tight chest-up shot, or silhouette backlit ║
+       ║                  by stage lights, or fretboard closeup      ║
+       ║    → Uncomment the line in the @media block below          ║
+       ║                                                              ║
+       ║  The dark overlay above each image keeps text readable.     ║
+       ║  To adjust overlay darkness, find .hero-bg-overlay and      ║
+       ║  change the rgba() opacity values (higher = darker).        ║
+       ╚══════════════════════════════════════════════════════════════╝ */
+
+    /* ── DESKTOP hero background (default — applies to all screens) ── */
     .hero-bg {
       position: absolute;
       inset: 0;
-      /* ▼▼▼ UNCOMMENT THIS LINE TO ADD THE HERO BACKGROUND PHOTO ▼▼▼ */
-      /* background-image: url('images/hero-bg.jpg'); */
-      /* ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ */
+      background-color: var(--color-midnight); /* Fallback if no image is set */
       background-size: cover;
       background-position: center top;
       background-repeat: no-repeat;
-      /* Dark colour fallback (shown when no image is set) */
-      background-color: var(--color-midnight);
       z-index: 0;
+
+      /* ▼▼▼ STEP 1: Uncomment this line for the DESKTOP background image ▼▼▼ */
+      /* background-image: url('images/hero-bg-desktop.jpg'); */
+      /* ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ */
+    }
+
+    /* ── MOBILE hero background (overrides desktop image on small screens) ── */
+    @media (max-width: 767px) {
+      .hero-bg {
+        background-position: center center; /* Better framing for portrait images */
+
+        /* ▼▼▼ STEP 2: Uncomment this line for the MOBILE background image ▼▼▼ */
+        /* background-image: url('images/hero-bg-mobile.jpg'); */
+        /* ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ */
+      }
     }
 
     /* Dark cinematic overlay — sits between photo and content.
@@ -1498,7 +1527,16 @@
       position: relative;
     }
 
-    /* When a real <img> is used instead of the placeholder div */
+    /* Real photo — fills the frame with correct cropping */
+    img.about-photo-placeholder {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+      border: var(--border-gold);
+      display: block;
+    }
+    /* Legacy rule kept for any <img> nested inside the div */
     .about-photo-placeholder img {
       width: 100%;
       height: 100%;
@@ -2708,7 +2746,7 @@
       margin-top: var(--space-sm);
     }
 
-    /* Avatar circle — gold initial on dark bg */
+    /* Avatar circle — shows photo if available, initial letter as fallback */
     .testi-avatar {
       width: 48px;
       height: 48px;
@@ -2723,6 +2761,21 @@
       font-weight: 700;
       color: var(--color-gold);
       flex-shrink: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    /* Show initial letter via data-initial when image fails to load */
+    .testi-avatar[data-initial]::after {
+      content: attr(data-initial);
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      inset: 0;
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--color-gold);
     }
 
     /* ╔══════════════════════════════════════════════════════════════╗
@@ -3932,25 +3985,16 @@
       <div class="about-photo-col reveal">
         <div class="about-photo-wrap">
 
-          <!-- ╔══════════════════════════════════════════════════════════╗
-               ║  CHANGE #2 — ABOUT SECTION PHOTO                        ║
-               ║                                                          ║
-               ║  Replace this entire <div class="about-photo-           ║
-               ║  placeholder"> block (including its closing </div>)      ║
-               ║  with a single image tag:                                ║
-               ║                                                          ║
-               ║  <img src="images/kenneth-about.jpg"                    ║
-               ║       alt="Kenneth Kamau"                               ║
-               ║       class="about-photo-placeholder"                   ║
-               ║       loading="eager">                                   ║
-               ║                                                          ║
-               ║  Use loading="eager" (not lazy) for the about photo     ║
-               ║  since it appears near the top of the page.             ║
-               ║                                                          ║
-               ║  Recommended: portrait orientation, 600×800px minimum.  ║
-               ║  The CSS handles sizing, border-radius and border.       ║
-               ╚══════════════════════════════════════════════════════════╝ -->
-          <div class="about-photo-placeholder" aria-label="Photo of Kenneth Kamau">
+          <!-- About photo — file: images/about-kenneth.jpg
+               Drop the file in the images/ folder and it appears automatically.
+               The gold guitar illustration below shows until the photo is added. -->
+          <img src="images/about-kenneth.jpg"
+               alt="Kenneth Kamau — worship guitarist"
+               class="about-photo-placeholder"
+               loading="eager"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <!-- Fallback placeholder — hidden once the real photo loads -->
+          <div class="about-photo-placeholder" aria-hidden="true" style="display:none;">
             <svg viewBox="0 0 120 180" fill="none" aria-hidden="true">
               <ellipse cx="60" cy="130" rx="32" ry="38" fill="rgba(200,146,42,0.15)" stroke="rgba(200,146,42,0.4)" stroke-width="1"/>
               <ellipse cx="60" cy="130" rx="20" ry="24" fill="none" stroke="rgba(200,146,42,0.2)" stroke-width="0.5"/>
@@ -4584,37 +4628,15 @@
 
       <!-- Show more button — visible on mobile only, hidden once expanded -->
       <div class="gallery-grid reveal" id="gallery-grid">
-
-        <!-- ╔══════════════════════════════════════════════════════════╗
-             ║  CHANGE #4 — GALLERY PHOTOS                              ║
-             ║                                                          ║
-             ║  Each .gallery-item contains a placeholder div.          ║
-             ║  Replace the inner <div class="gallery-placeholder">     ║
-             ║  (and everything inside it) with a real image:           ║
-             ║                                                          ║
-             ║  <img src="images/gallery/photo-name.jpg"               ║
-             ║       alt="Description of the photo"                    ║
-             ║       loading="lazy">                                    ║
-             ║                                                          ║
-             ║  loading="lazy" is important — without it the browser   ║
-             ║  downloads ALL gallery photos at once on page load,      ║
-             ║  making the site slow. lazy loads each photo only when  ║
-             ║  the visitor scrolls close to it.                        ║
-             ║                                                          ║
-             ║  The data-category attribute controls filtering:         ║
-             ║    data-category="live"      → Live performances         ║
-             ║    data-category="worship"   → Worship moments           ║
-             ║    data-category="backstage" → Behind the scenes         ║
-             ║                                                          ║
-             ║  To add more photos: duplicate any .gallery-item block.  ║
-             ║  Use class="gallery-item--tall" for portrait photos      ║
-             ║  and class="gallery-item--wide" for landscape shots.     ║
-             ║  The masonry grid expands automatically — no limit.      ║
-             ╚══════════════════════════════════════════════════════════╝ -->
-
         <div class="gallery-item" data-category="live">
-          <div class="gallery-placeholder">
-            <div class="gallery-ph-icon" aria-hidden="true">
+          <!-- Gallery image — file: images/gallery/live-1.jpg -->
+          <img src="images/gallery/imagesgallerylive-1.jpeg"
+               alt="Kenneth Kamau performing on stage"
+               loading="lazy"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <!-- Placeholder shown until photo is added -->
+          <div class="gallery-placeholder" style="display:none;" aria-hidden="true">
+            <div class="gallery-ph-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
                 <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
                 <polyline points="21 15 16 10 5 21"/>
@@ -4628,8 +4650,14 @@
         </div>
 
         <div class="gallery-item gallery-item--tall" data-category="worship">
-          <div class="gallery-placeholder">
-            <div class="gallery-ph-icon" aria-hidden="true">
+          <!-- Gallery image — file: images/gallery/worship-1.jpg -->
+          <img src="images/gallery/worship-1.jpg"
+               alt="Kenneth Kamau fretboard closeup during worship"
+               loading="lazy"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <!-- Placeholder shown until photo is added -->
+          <div class="gallery-placeholder" style="display:none;" aria-hidden="true">
+            <div class="gallery-ph-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
                 <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
                 <polyline points="21 15 16 10 5 21"/>
@@ -4643,8 +4671,14 @@
         </div>
 
         <div class="gallery-item" data-category="backstage">
-          <div class="gallery-placeholder">
-            <div class="gallery-ph-icon" aria-hidden="true">
+          <!-- Gallery image — file: images/gallery/backstage-1.jpg -->
+          <img src="images/gallery/backstage-1.jpg"
+               alt="Kenneth Kamau soundcheck backstage"
+               loading="lazy"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <!-- Placeholder shown until photo is added -->
+          <div class="gallery-placeholder" style="display:none;" aria-hidden="true">
+            <div class="gallery-ph-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
                 <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
                 <polyline points="21 15 16 10 5 21"/>
@@ -4658,14 +4692,20 @@
         </div>
 
         <div class="gallery-item gallery-item--wide" data-category="live">
-          <div class="gallery-placeholder">
-            <div class="gallery-ph-icon" aria-hidden="true">
+          <!-- Gallery image — file: images/gallery/live-2.jpg -->
+          <img src="images/gallery/imagesgallerylive-2.jpeg"
+               alt="Kenneth Kamau performing at gospel conference"
+               loading="lazy"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <!-- Placeholder shown until photo is added -->
+          <div class="gallery-placeholder" style="display:none;" aria-hidden="true">
+            <div class="gallery-ph-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
                 <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
                 <polyline points="21 15 16 10 5 21"/>
               </svg>
             </div>
-            <span>Crowd &amp; stage · Conference</span>
+            <span>Crowd & stage · Conference</span>
           </div>
           <div class="gallery-item-overlay">
             <span class="gallery-item-tag">Live</span>
@@ -4673,8 +4713,14 @@
         </div>
 
         <div class="gallery-item" data-category="worship">
-          <div class="gallery-placeholder">
-            <div class="gallery-ph-icon" aria-hidden="true">
+          <!-- Gallery image — file: images/gallery/worship-2.jpg -->
+          <img src="images/gallery/imagesgalleryworship-2.jpeg"
+               alt="Kenneth Kamau praying before the set"
+               loading="lazy"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <!-- Placeholder shown until photo is added -->
+          <div class="gallery-placeholder" style="display:none;" aria-hidden="true">
+            <div class="gallery-ph-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
                 <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
                 <polyline points="21 15 16 10 5 21"/>
@@ -4688,8 +4734,14 @@
         </div>
 
         <div class="gallery-item gallery-item--tall" data-category="backstage">
-          <div class="gallery-placeholder">
-            <div class="gallery-ph-icon" aria-hidden="true">
+          <!-- Gallery image — file: images/gallery/backstage-2.jpg -->
+          <img src="images/gallery/imagesgallerybackstage-2.jpeg"
+               alt="Kenneth Kamau backstage rehearsal"
+               loading="lazy"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <!-- Placeholder shown until photo is added -->
+          <div class="gallery-placeholder" style="display:none;" aria-hidden="true">
+            <div class="gallery-ph-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
                 <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
                 <polyline points="21 15 16 10 5 21"/>
@@ -4703,8 +4755,14 @@
         </div>
 
         <div class="gallery-item" data-category="live">
-          <div class="gallery-placeholder">
-            <div class="gallery-ph-icon" aria-hidden="true">
+          <!-- Gallery image — file: images/gallery/live-3.jpg -->
+          <img src="images/gallery/imagesgallerylive-3.jpeg"
+               alt="Kenneth Kamau stage silhouette"
+               loading="lazy"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <!-- Placeholder shown until photo is added -->
+          <div class="gallery-placeholder" style="display:none;" aria-hidden="true">
+            <div class="gallery-ph-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
                 <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
                 <polyline points="21 15 16 10 5 21"/>
@@ -4718,8 +4776,14 @@
         </div>
 
         <div class="gallery-item" data-category="worship">
-          <div class="gallery-placeholder">
-            <div class="gallery-ph-icon" aria-hidden="true">
+          <!-- Gallery image — file: images/gallery/worship-3.jpg -->
+          <img src="images/gallery/imagesgalleryworship-3.jpeg"
+               alt="Kenneth Kamau worship band moment"
+               loading="lazy"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <!-- Placeholder shown until photo is added -->
+          <div class="gallery-placeholder" style="display:none;" aria-hidden="true">
+            <div class="gallery-ph-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
                 <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
                 <polyline points="21 15 16 10 5 21"/>
@@ -4731,7 +4795,6 @@
             <span class="gallery-item-tag">Worship</span>
           </div>
         </div>
-
       </div><!-- .gallery-grid -->
 
       <!-- Show more / collapse button — mobile only.
@@ -4831,7 +4894,15 @@
             </blockquote>
             <div class="testi-author">
               <!-- Avatar — shows first initial; swap for <img> if you have a photo -->
-              <div class="testi-avatar" data-initial="P" aria-hidden="true">P</div>
+              <!-- Testimonial avatar — file: images/avatars/avatar-1.jpg
+                   Drop the file in images/avatars/ and it appears automatically.
+                   The initial letter shows as fallback if the photo is missing. -->
+              <div class="testi-avatar" aria-hidden="true">
+                <img src="images/avatars/avatar-1.jpg"
+                     alt="Pastor James Mwangi"
+                     loading="lazy"
+                     onerror="this.style.display='none';this.parentElement.dataset.initial='P';" />
+              </div>
               <div class="testi-author-info">
                 <p class="testi-name">Pastor James Mwangi</p>
                 <p class="testi-role">Senior Pastor · CITAM Valley Road</p>
@@ -4848,7 +4919,15 @@
               not for the applause &mdash; and that makes all the difference.
             </blockquote>
             <div class="testi-author">
-              <div class="testi-avatar" data-initial="S" aria-hidden="true">S</div>
+              <!-- Testimonial avatar — file: images/avatars/avatar-2.jpg
+                   Drop the file in images/avatars/ and it appears automatically.
+                   The initial letter shows as fallback if the photo is missing. -->
+              <div class="testi-avatar" aria-hidden="true">
+                <img src="images/avatars/avatar-2.jpg"
+                     alt="Sarah Njoki"
+                     loading="lazy"
+                     onerror="this.style.display='none';this.parentElement.dataset.initial='S';" />
+              </div>
               <div class="testi-author-info">
                 <p class="testi-name">Sarah Njoki</p>
                 <p class="testi-role">Worship Leader &amp; Vocalist</p>
@@ -4865,7 +4944,15 @@
               entire event. We won&rsquo;t do another conference without him.
             </blockquote>
             <div class="testi-author">
-              <div class="testi-avatar" data-initial="D" aria-hidden="true">D</div>
+              <!-- Testimonial avatar — file: images/avatars/avatar-3.jpg
+                   Drop the file in images/avatars/ and it appears automatically.
+                   The initial letter shows as fallback if the photo is missing. -->
+              <div class="testi-avatar" aria-hidden="true">
+                <img src="images/avatars/avatar-3.jpg"
+                     alt="David Kariuki"
+                     loading="lazy"
+                     onerror="this.style.display='none';this.parentElement.dataset.initial='D';" />
+              </div>
               <div class="testi-author-info">
                 <p class="testi-name">David Kariuki</p>
                 <p class="testi-role">Events Director · Kingdom Sound Conference</p>
@@ -4882,7 +4969,15 @@
               His dedication to his craft and to God is unmistakeable.
             </blockquote>
             <div class="testi-author">
-              <div class="testi-avatar" data-initial="G" aria-hidden="true">G</div>
+              <!-- Testimonial avatar — file: images/avatars/avatar-4.jpg
+                   Drop the file in images/avatars/ and it appears automatically.
+                   The initial letter shows as fallback if the photo is missing. -->
+              <div class="testi-avatar" aria-hidden="true">
+                <img src="images/avatars/avatar-4.jpg"
+                     alt="Grace Wambui"
+                     loading="lazy"
+                     onerror="this.style.display='none';this.parentElement.dataset.initial='G';" />
+              </div>
               <div class="testi-author-info">
                 <p class="testi-name">Grace Wambui</p>
                 <p class="testi-role">Worship Director · Mavuno Church</p>
@@ -4899,7 +4994,15 @@
               something every young musician should aspire to.
             </blockquote>
             <div class="testi-author">
-              <div class="testi-avatar" data-initial="M" aria-hidden="true">M</div>
+              <!-- Testimonial avatar — file: images/avatars/avatar-5.jpg
+                   Drop the file in images/avatars/ and it appears automatically.
+                   The initial letter shows as fallback if the photo is missing. -->
+              <div class="testi-avatar" aria-hidden="true">
+                <img src="images/avatars/avatar-5.jpg"
+                     alt="Michael Otieno"
+                     loading="lazy"
+                     onerror="this.style.display='none';this.parentElement.dataset.initial='M';" />
+              </div>
               <div class="testi-author-info">
                 <p class="testi-name">Michael Otieno</p>
                 <p class="testi-role">Bandleader &amp; Session Musician</p>
