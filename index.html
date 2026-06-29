@@ -76,7 +76,7 @@
     "sameAs": [
       "https://www.instagram.com/samwelageta?igsh=cnNzamQyM3NkcG9x",
       "https://www.facebook.com/ageta.samwel",
-      "https://www.tiktok.com/@kingkaya04?_r=1&_t=ZS-97arJTjRSnk"
+      "hhttps://www.tiktok.com/@kingkaya04?_r=1&_t=ZS-97arJTjRSnk"
     ],
     "address": {
       "@type": "PostalAddress",
@@ -3432,6 +3432,24 @@
       padding-right: 36px; /* Room for chevron */
     }
 
+    /* Dropdown option items — browsers render these natively so we must
+       set explicit background and text colours or they become invisible
+       against our dark transparent form background.
+       Dark mode: dark background, light text.
+       Light mode: overridden below to match the light theme.          */
+    .form-select option {
+      background-color: #1a1030;   /* --color-deep */
+      color: #f0eafa;              /* --color-mist */
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      padding: 8px;
+    }
+
+    /* Disabled placeholder option ("Select event type…") */
+    .form-select option:disabled {
+      color: rgba(240, 234, 250, 0.4);
+    }
+
     .form-select-chevron {
       position: absolute;
       right: 12px;
@@ -3473,6 +3491,16 @@
     }
 
     [data-theme="light"] .form-select-chevron { color: rgba(13,10,26,0.4); }
+
+    /* Light mode dropdown options */
+    [data-theme="light"] .form-select option {
+      background-color: #f0eafa;   /* --color-mist */
+      color: #0d0a1a;              /* --color-midnight */
+    }
+
+    [data-theme="light"] .form-select option:disabled {
+      color: rgba(13, 10, 26, 0.35);
+    }
 
     /* Feedback messages */
     .form-feedback {
@@ -4630,7 +4658,7 @@
       <div class="gallery-grid reveal" id="gallery-grid">
         <div class="gallery-item" data-category="live">
           <!-- Gallery image — file: images/gallery/live-1.jpg -->
-          <img src="images/gallery/imagesgallerylive-1.jpeg"
+          <img src="images/gallery/live-1.jpg"
                alt="Kenneth Kamau performing on stage"
                loading="lazy"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
@@ -4693,7 +4721,7 @@
 
         <div class="gallery-item gallery-item--wide" data-category="live">
           <!-- Gallery image — file: images/gallery/live-2.jpg -->
-          <img src="images/gallery/imagesgallerylive-2.jpeg"
+          <img src="images/gallery/live-2.jpg"
                alt="Kenneth Kamau performing at gospel conference"
                loading="lazy"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
@@ -4714,7 +4742,7 @@
 
         <div class="gallery-item" data-category="worship">
           <!-- Gallery image — file: images/gallery/worship-2.jpg -->
-          <img src="images/gallery/imagesgalleryworship-2.jpeg"
+          <img src="images/gallery/worship-2.jpg"
                alt="Kenneth Kamau praying before the set"
                loading="lazy"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
@@ -4735,7 +4763,7 @@
 
         <div class="gallery-item gallery-item--tall" data-category="backstage">
           <!-- Gallery image — file: images/gallery/backstage-2.jpg -->
-          <img src="images/gallery/imagesgallerybackstage-2.jpeg"
+          <img src="images/gallery/backstage-2.jpg"
                alt="Kenneth Kamau backstage rehearsal"
                loading="lazy"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
@@ -4756,7 +4784,7 @@
 
         <div class="gallery-item" data-category="live">
           <!-- Gallery image — file: images/gallery/live-3.jpg -->
-          <img src="images/gallery/imagesgallerylive-3.jpeg"
+          <img src="images/gallery/live-3.jpg"
                alt="Kenneth Kamau stage silhouette"
                loading="lazy"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
@@ -4777,7 +4805,7 @@
 
         <div class="gallery-item" data-category="worship">
           <!-- Gallery image — file: images/gallery/worship-3.jpg -->
-          <img src="images/gallery/imagesgalleryworship-3.jpeg"
+          <img src="images/gallery/worship-3.jpg"
                alt="Kenneth Kamau worship band moment"
                loading="lazy"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
@@ -5494,7 +5522,7 @@
              ║    1. The href="mailto:..." attribute on this <a> tag    ║
              ║    2. The visible text inside .contact-method-value      ║
              ╚══════════════════════════════════════════════════════════╝ -->
-        <a href="mailto:agetasamwel418@gmail.com?subject=Booking%20Inquiry"
+        <a href="mailto:kenneth.kamau@email.com?subject=Booking%20Inquiry"
            class="contact-method-card glass-card"
            aria-label="Email Kenneth">
           <div class="contact-method-icon contact-method-icon--email">
